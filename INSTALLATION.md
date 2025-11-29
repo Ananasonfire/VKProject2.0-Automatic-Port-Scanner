@@ -4,7 +4,7 @@
 
 - **ОС:** Linux (Ubuntu 20+, Debian 10+), macOS, или Windows (WSL2)
 - **Python:** 3.11 или выше
-- **権限:** Sudo/Admin для запуска Masscan
+- Sudo/Admin для запуска Masscan
 - **Интернет:** Для получения баннеров и CVE проверок
 
 ### ШАГИ УСТАНОВКИ
