@@ -46,17 +46,21 @@ class MasscanScanner:
         try:
             result = subprocess.run(
                 ['masscan', '--version'],
-                capture_output=True,
-                timeout=5
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
             )
             if result.returncode == 0:
-                logger.info(f"Masscan найден: {result.stdout.decode().strip()}")
+                logger.info(f"Masscan найден: {result.stdout.strip()}")
                 return True
-        except (subprocess.TimeoutExpired, FileNotFoundError):
-            pass
+            else:
+                logger.error(f"Masscan вернул код {result.returncode}: {result.stderr.strip()}")
+        except FileNotFoundError:
+            logger.error("Команда 'masscan' не найдена в PATH")
         
-        logger.error("Masscan не установлен или недоступен. Установите: sudo apt install masscan")
-        raise RuntimeError("Masscan не найден в системе")
+        # если дошли сюда — реально не нашли/не запускается
+        raise RuntimeError("Masscan не найден в системе или не запускается")
+
     
     async def scan_async(
         self,
