@@ -97,8 +97,9 @@ class PortScannerApplication:
             stats.total_ports_found = len(session.results)
             stats.new_ports_found = len(new_results)
             stats.targets_scanned = len(self.config.scan.targets)
-            
-            logger.info(f"Scan completed in {format_duration(stats.duration_seconds())}")
+            summary = stats.finalize()
+
+            logger.info(f"Scan completed in {summary['duration_formatted']}")
             logger.info(f"Total ports found: {stats.total_ports_found}")
             logger.info(f"New ports found: {stats.new_ports_found}")
             

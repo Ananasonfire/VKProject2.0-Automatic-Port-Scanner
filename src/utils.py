@@ -278,6 +278,10 @@ class ScanStatistics:
         self.new_ports_found = 0
         self.targets_scanned = 0
         self.errors = 0
+    def duration_seconds(self) -> float:
+        if self.end_time is None:
+            return (datetime.now() - self.start_time).total_seconds()
+        return (self.end_time - self.start_time).total_seconds()
     
     def finalize(self) -> Dict[str, Any]:
         """Получить финальную статистику"""

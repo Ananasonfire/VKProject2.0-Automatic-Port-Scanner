@@ -403,15 +403,16 @@ def api_history():
         
         history = [
             {
-                'scan_id': s.id,
-                'status': s.status.value,
-                'timestamp': s.start_time.isoformat(),
-                'total_results': s.total_results,
-                'new_results': s.new_results,
-                'duration': s.duration_seconds(),
+        "scan_id": s.id,
+        "status": s.status if isinstance(s.status, str) else s.status.value,
+        "timestamp": s.start_time.isoformat(),
+        "total_results": s.total_results,
+        "new_results": s.new_results,
+        "duration": s.duration_seconds(),
             }
-            for s in sessions
+        for s in sessions
         ]
+
         
         return jsonify({'history': history})
     except Exception as e:
