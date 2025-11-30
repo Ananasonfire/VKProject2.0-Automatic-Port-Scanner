@@ -1,5 +1,5 @@
 """
-notify.py
+
 
 Система уведомлений: Telegram, Email, Discord.
 """
