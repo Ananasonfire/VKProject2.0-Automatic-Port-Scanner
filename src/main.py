@@ -19,7 +19,7 @@ from config import ConfigManager, print_config_info
 from scanner import MasscanScanner
 from storage import create_storage
 from notify import create_notification_manager
-from utils import setup_logging, format_notification_message, ScanStatistics
+from utils import setup_logging, format_notification_message, ScanStatistics,format_duration
 from models import ScanStatus
 
 
@@ -98,7 +98,7 @@ class PortScannerApplication:
             stats.new_ports_found = len(new_results)
             stats.targets_scanned = len(self.config.scan.targets)
             
-            logger.info(f"Scan completed in {stats.format_duration(stats.duration_seconds())}")
+            logger.info(f"Scan completed in {format_duration(stats.duration_seconds())}")
             logger.info(f"Total ports found: {stats.total_ports_found}")
             logger.info(f"New ports found: {stats.new_ports_found}")
             
