@@ -42,24 +42,17 @@ class MasscanScanner:
     
     @staticmethod
     def _verify_masscan_installed() -> bool:
-        """Проверить установлен ли Masscan"""
-        try:
-            result = subprocess.run(
-                ['masscan', '--version'],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True
-            )
-            if result.returncode == 0:
-                logger.info(f"Masscan найден: {result.stdout.strip()}")
-                return True
-            else:
-                logger.error(f"Masscan вернул код {result.returncode}: {result.stderr.strip()}")
-        except FileNotFoundError:
-            logger.error("Команда 'masscan' не найдена в PATH")
-        
-        # если дошли сюда — реально не нашли/не запускается
-        raise RuntimeError("Masscan не найден в системе или не запускается")
+        """Проверить, что команда masscan существует в PATH."""
+        import shutil
+
+        path = shutil.which("masscan")
+        if path:
+            logger.info(f"Masscan найден по пути: {path}")
+            return True
+
+        logger.error("Команда 'masscan' не найдена в PATH")
+        raise RuntimeError("Masscan не найден в системе")
+
 
     
     async def scan_async(
